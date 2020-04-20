@@ -1,6 +1,9 @@
 const fetch = require('node-fetch');
-const conf = require('ocore/conf');
 
+let conf;
+exports.setConfiguration = function(_conf){
+	conf = _conf;
+}
 
 const request = (endpoint, options) => {
 	return fetch(`${conf.odex_http_url}${endpoint}`, {

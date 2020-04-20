@@ -1,14 +1,19 @@
 const crypto = require('crypto');
-const signing = require('./signing.js');
+const signing = typeof window !== 'undefined' ? require('./browser/signing.js') : require('./node/signing.js');
 const exchange = require('./exchange.js');
-const conf = require('ocore/conf');
 const formulaCommon = require('ocore/formula/common.js');
-const account = require('./account.js');
+const account = typeof window !== 'undefined' ? require('./browser/account.js') : require('./node/account.js');
 const ws_api = require('./ws_api.js');
 const rest_api = require('./rest_api.js');
 
 let assocMyOrders = {};
 let bTrackingOrders = false;
+let conf;
+
+exports.setConfiguration = function(_conf){
+	conf = _conf;
+}
+
 
 function dropExcessivePrecision(price) {
 	let strPrice = price.toPrecision(conf.MAX_PRICE_PRECISION);

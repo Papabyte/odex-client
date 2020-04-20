@@ -1,4 +1,4 @@
-const account = require('./account.js');
+const account = typeof window !== 'undefined' ? require('./browser/account.js') : require('./node/account.js');
 const ws_api = require('./ws_api.js');
 const rest_api = require('./rest_api.js');
 

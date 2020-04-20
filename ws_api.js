@@ -1,11 +1,14 @@
 const EventEmitter = require('events')//.EventEmitter;
-const util = require( 'util' );
-const WebSocket = require('ws');
-const conf = require('ocore/conf');
-const account = require('./account.js');
+const WebSocket = typeof window !== 'undefined' ? WebSocket : require('ws');
+const account = typeof window !== 'undefined' ?  require('./browser/account.js') : require('./node/account.js');
 const exchange = require('./exchange.js');
 
-let ws;
+let ws, conf;
+
+
+exports.setConfiguration = function(_conf){
+	conf = _conf;
+}
 
 class WsEmitter extends EventEmitter {
 
